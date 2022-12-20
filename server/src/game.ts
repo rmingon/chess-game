@@ -5,14 +5,14 @@ import {WebSocket} from "ws";
 class Game {
   parties = new Map<String, Party>()
 
-  newGame(role: "SENDER" | "ROUTER", ws: WebSocket) {
+  newGame(role: "white" | "black", ws: WebSocket) {
     const id = makeId(8)
-    // this.parties.set(id, new Party(role, ws, id))
+    this.parties.set(id, new Party(role, ws, id))
     this.news()
   }
 
   join(id: string, ws: WebSocket) {
-    // (this.parties.get(id))?.join(ws)
+    (this.parties.get(id))?.join(ws)
     this.news()
   }
 
