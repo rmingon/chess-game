@@ -1,14 +1,17 @@
 import Select from './Select.vue'
 
 describe('<Select />', () => {
-  it('renders', () => {
-    // see: https://on.cypress.io/mounting-vue
+  it('renders', async () => {
+    const spy = cy.spy()
     cy.mount(Select, {
       props: {
-        list: ['car', 'truck', 'plane']
+        list: ['car', 'truck', 'plane'],
+      },
+      listeners: {
+        'changed': spy
       }
     })
-    cy.get('select').select('car')
-    // cy.get('@change').should('have.been.calledWith', 1)
+    cy.get('select').select('truck')
+    await cy.expect(spy).to.be.calledOnce
   })
 })

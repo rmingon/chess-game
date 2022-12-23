@@ -1,7 +1,7 @@
 <template>
   <div class="flex justify-center">
     <div class="mb-3 xl:w-96">
-      <select @change="emit('change', $event)"
+      <select @change="changed($event)"
           class="form-select appearance-none
       block
       w-full
@@ -27,12 +27,20 @@
 
 <script setup lang="ts">
   const props = defineProps<{
-    list: string[],
+    list: string[]
+    spy?: (val: string) => {}
   }>()
 
   const emit = defineEmits<{
-    (e: 'change', selected: string): void
+    (e: 'changed', selected: string): void
   }>()
+
+  const changed = ($event: Event) => {
+    const el = $event.target as HTMLInputElement
+    console.log(el.value)
+    if (props.spy) props.spy(el.value)
+    emit('changed', el.value)
+  }
 </script>
 
 <style scoped>
