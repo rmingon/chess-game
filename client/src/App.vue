@@ -1,10 +1,9 @@
 <script setup lang="ts">
-  import {useWebSocket} from "@vueuse/core";
-  import {computed, ref} from "vue";
+import {computed, ref} from "vue";
   import Select from "./atomic/atoms/Select.vue"
   import Button from "./atomic/atoms/Button.vue";
-
-  const { status, data, send, open, close } = useWebSocket('ws://127.0.0.1:8080')
+  import ChessCase from "./atomic/atoms/ChessCase.vue";
+  import {board} from "./stores/board";
 
   const color_selected = ref<string>("White")
 
@@ -12,18 +11,27 @@
     color_selected.value = $event
   }
 
+  const useBoard = board()
+
   const play = () => {
-    send(JSON.stringify({
-      command: "NEW_GAME",
-      color: color_selected.value
-    }))
+    useBoard.newGame(color_selected.value)
   }
 
 </script>
 
 <template>
-  <Select :list="['White','Black']" @changed="setColor"/>
-  <Button label="PLAY" @click="play()" />
+  <div>
+    <Select :list="['White','Black']" @changed="setColor"/>
+    <Button label="PLAY" @click="play()" />
+
+    <div v-for="(x, index) in useBoard.board" :key="index" class="flex">
+      <chess-case
+          :color="(y_index+index) % 2 ? 'white' : 'black'"
+          :piece="y[0]"
+          v-for="(y, y_index) in x" :key="y_index">
+      </chess-case>
+    </div>
+  </div>
 </template>
 
 
