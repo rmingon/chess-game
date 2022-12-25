@@ -8,7 +8,7 @@ wss.on('connection', function connection(ws) {
     try {
       let data = JSON.parse(message.toString())
       if (data.command === "NEW_GAME")
-        Game.newGame(data.role, ws)
+        Game.newGame(data.color, ws)
       if (data.command === "JOIN")
         Game.join(data.id, ws)
       if (data.command === "COMMAND")
