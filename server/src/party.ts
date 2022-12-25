@@ -4,14 +4,14 @@ import Pawn from "./piece/pawn";
 
 const BASE_BOARD =
   [
-    [],[],[],[],[],[],[],[],
-    [new Pawn('black')],[new Pawn('black')],[new Pawn('black')],[new Pawn('black')],[new Pawn('black')],[new Pawn('black')],[new Pawn('black')],[new Pawn('black')],
-    [],[],[],[],[],[],[],[],
-    [],[],[],[],[],[],[],[],
-    [],[],[],[],[],[],[],[],
-    [],[],[],[],[],[],[],[],
-    [new Pawn('white')],[new Pawn('white')],[new Pawn('white')],[new Pawn('white')],[new Pawn('white')],[new Pawn('white')],[new Pawn('white')],[new Pawn('white')],
-    [],[],[],[],[],[],[],[],
+    [[],[],[],[],[],[],[],[]],
+    [[new Pawn('black')],[new Pawn('black')],[new Pawn('black')],[new Pawn('black')],[new Pawn('black')],[new Pawn('black')],[new Pawn('black')],[new Pawn('black')]],
+    [[],[],[],[],[],[],[],[]],
+    [[],[],[],[],[],[],[],[]],
+    [[],[],[],[],[],[],[],[]],
+    [[],[],[],[],[],[],[],[]],
+    [[new Pawn('white')],[new Pawn('white')],[new Pawn('white')],[new Pawn('white')],[new Pawn('white')],[new Pawn('white')],[new Pawn('white')],[new Pawn('white')]],
+    [[],[],[],[],[],[],[],[]],
   ]
 
 export class Party {
@@ -19,8 +19,8 @@ export class Party {
   white: WebSocket | undefined
   black: WebSocket | undefined
 
-  constructor(role: "white" | "black", ws: WebSocket, id: string) {
-    role === "white" ? this.setWhite(ws) : this.setBlack(ws)
+  constructor(color: "White" | "Black", ws: WebSocket, id: string) {
+    color === "White" ? this.setWhite(ws) : this.setBlack(ws)
     this.board = BASE_BOARD
   }
 
