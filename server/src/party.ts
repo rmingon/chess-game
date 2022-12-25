@@ -22,6 +22,7 @@ export class Party {
   constructor(color: "White" | "Black", ws: WebSocket, id: string) {
     color === "White" ? this.setWhite(ws) : this.setBlack(ws)
     this.board = BASE_BOARD
+    this.sendToPlayers(this.board)
   }
 
   setWhite(ws: WebSocket) {
@@ -34,6 +35,11 @@ export class Party {
 
   join(ws: WebSocket) {
     this.white ? this.setBlack(ws) : this.setWhite(ws)
+  }
+
+  sendToPlayers(data: {}) {
+      this.black?.send(JSON.stringify(data))
+      this.white?.send(JSON.stringify(data))
   }
 
 }
