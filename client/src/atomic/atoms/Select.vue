@@ -1,10 +1,7 @@
 <template>
-  <div class="flex justify-center">
-    <div class="mb-3 xl:w-96">
-      <select @change="emit('change', $event)"
+    <div class="mb-3">
+      <select @change="onChange($event)"
           class="form-select appearance-none
-      block
-      w-full
       px-3
       py-1.5
       text-base
@@ -22,7 +19,6 @@
         </option>
       </select>
     </div>
-  </div>
 </template>
 
 <script setup lang="ts">
@@ -31,8 +27,13 @@
   }>()
 
   const emit = defineEmits<{
-    (e: 'change', selected: string): void
+    (e: 'changed', selected: string): void
   }>()
+
+  const onChange = ($event: Event) => {
+    const el = $event.target as HTMLInputElement
+    emit('changed', el.value)
+  }
 </script>
 
 <style scoped>
