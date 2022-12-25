@@ -1,6 +1,6 @@
 <template>
   <div class="h-24 w-24" :class="[COLOR[props.color]]">
-    <img :src="`@/assets/pieces/${props.piece?.img || 'default'}.png`" alt="">
+    <img class="mx-auto my-auto" :src="getImgUrl(props.piece?.img || 'default')" alt="">
   </div>
 </template>
 
@@ -15,6 +15,10 @@
     img: string
     piece: Piece | undefined
   }>()
+
+  const getImgUrl = (piece_img: string) => {
+    return new URL('../../assets/pieces/' + piece_img + ".png", import.meta.url).href
+  }
 
   const COLOR = {
     white: "bg-gray-100",
