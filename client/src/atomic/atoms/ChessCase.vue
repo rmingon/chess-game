@@ -1,5 +1,5 @@
 <template>
-  <div class="h-24 w-24" :class="[COLOR[props.color]]">
+  <div class="h-16 w-16" :class="[COLOR[props.color]]">
     <img class="mx-auto my-auto" :src="getImgUrl(props.piece?.img || 'default')" alt="">
   </div>
 </template>
