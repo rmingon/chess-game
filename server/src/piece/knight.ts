@@ -3,6 +3,7 @@ import {Positon} from "../type";
 import {Basic} from "./basic";
 
 export default class Knight extends Basic implements Piece {
+    can_jump = true
 
     constructor(color: "white" | "black") {
         super()
@@ -18,5 +19,8 @@ export default class Knight extends Basic implements Piece {
         return false;
     }
 
+    setSelected(selected: boolean) {
+        this.selected = true
+    }
 
 }

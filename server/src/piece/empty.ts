@@ -1,1 +1,3 @@
-export default class Empty {}
+import {Basic} from "./basic";
+
+export default class Empty extends Basic {}

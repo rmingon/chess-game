@@ -7,7 +7,7 @@ export default class Rook extends Basic implements Piece {
     constructor(color: "white" | "black") {
         super()
         this.color = color
-        this.img = color === "white" ? 'king_white' : 'king_black'
+        this.img = color === "white" ? 'rook_white' : 'rook_black'
     }
 
     eat({x, y}: Positon): boolean {
