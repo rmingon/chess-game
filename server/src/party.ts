@@ -17,18 +17,27 @@ const BASE_BOARD =
     [new Empty(),new Empty(),new Empty(),new Empty(),new Empty(),new Empty(),new Empty(),new Empty()],
     [new Empty(),new Empty(),new Empty(),new Empty(),new Empty(),new Empty(),new Empty(),new Empty()],
     [new Pawn('white'),new Pawn('white'),new Pawn('white'),new Pawn('white'),new Pawn('white'),new Pawn('white'),new Pawn('white'),new Pawn('white')],
-    [new Rook('white'),new Knight('white'),new Bishop('white'),new King('black'),new Queen('white'),new Bishop('white'),new Knight('white'),new Rook('white')],
+    [new Rook('white'),new Knight('white'),new Bishop('white'),new King('white'),new Queen('white'),new Bishop('white'),new Knight('white'),new Rook('white')],
   ]
 
 export class Party {
   board: Board
+  id: string
   white: WebSocket | undefined
   black: WebSocket | undefined
 
   constructor(color: "White" | "Black", ws: WebSocket, id: string) {
     color === "White" ? this.setWhite(ws) : this.setBlack(ws)
     this.board = BASE_BOARD
-    this.sendToPlayers(this.board)
+    this.id = id
+    this.sendBoard()
+  }
+
+  sendBoard() {
+      this.sendToPlayers({
+          id: this.id,
+          board: this.board
+      })
   }
 
   setWhite(ws: WebSocket) {
@@ -46,6 +55,14 @@ export class Party {
   sendToPlayers(data: {}) {
       this.black?.send(JSON.stringify(data))
       this.white?.send(JSON.stringify(data))
+  }
+
+  selected({x, y}: {x: number, y: number}) {
+    let piece = this.board[x][y]
+    // TODO deselect all before
+    piece.setSelected(true)
+    console.log(piece)
+    this.sendBoard()
   }
 
 }
