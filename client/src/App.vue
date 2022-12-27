@@ -17,19 +17,28 @@ import {computed, ref} from "vue";
     useBoard.newGame(color_selected.value)
   }
 
+  const pieceSelected = (x: number, y: number) => {
+    useBoard.selected({x, y})
+    console.log(x, y)
+  }
+
 </script>
 
 <template>
-  <div>
-    <Select :list="['White','Black']" @changed="setColor"/>
-    <Button label="PLAY" @click="play()" />
-
-    <div v-for="(x, index) in useBoard.board" :key="index" class="flex">
-      <chess-case
-          :color="(y_index+index) % 2 ? 'white' : 'black'"
-          :piece="y[0]"
-          v-for="(y, y_index) in x" :key="y_index">
-      </chess-case>
+  <div class="flex">
+    <div class="px-3">
+      <Select :list="['White','Black']" @changed="setColor"/>
+      <Button label="PLAY" @click="play()" />
+    </div>
+    <div>
+      <div v-for="(x, x_index) in useBoard.board" :key="x_index" class="flex">
+        <chess-case
+            :color="(y_index+x_index) % 2 ? 'white' : 'black'"
+            :piece="y"
+            v-for="(y, y_index) in x" :key="y_index"
+            @click="pieceSelected(x_index, y_index)">
+        </chess-case>
+      </div>
     </div>
   </div>
 </template>
