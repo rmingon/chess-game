@@ -2,6 +2,11 @@ import {defineStore} from "pinia";
 import {useWebSocket} from "@vueuse/core";
 import {computed, reactive, ref, toRefs, watch} from "vue";
 
+type ws = {
+    board: object[],
+    id: string
+}
+
 export const board = defineStore('board', () => {
     const { status, data, send, open, close } = useWebSocket('ws://127.0.0.1:8080')
 
@@ -12,7 +17,19 @@ export const board = defineStore('board', () => {
         }))
     }
 
-    const board = computed(() => JSON.parse(data.value))
+    const $ws = computed((): ws => JSON.parse(data.value))
 
-    return {status, board, newGame}
+    const board = computed(() => $ws.value?.board || [])
+    const id = computed(() => $ws.value?.id || "")
+
+    const selected = (position: {x: number, y: number}) => {
+      send(JSON.stringify({
+          id: id.value,
+          command: "COMMAND",
+          func: 'selected',
+          arg: position,
+      }))
+    }
+
+    return {status, board, newGame, selected, id}
 })
