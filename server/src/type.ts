@@ -10,7 +10,7 @@ export type Square = Array<Bishop | King | Knight | Pawn | Queen | Rook | Empty>
 
 export type Board = Array<Square>
 
-export type Positon = {
+export type Position = {
   x: number,
   y: number
 }
