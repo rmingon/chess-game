@@ -33,7 +33,6 @@ import {computed, ref} from "vue";
     <div>
       <div v-for="(x, x_index) in useBoard.board" :key="x_index" class="flex">
         <chess-case
-            :color="(y_index+x_index) % 2 ? 'white' : 'black'"
             :piece="y"
             v-for="(y, y_index) in x" :key="y_index"
             @click="pieceSelected(x_index, y_index)">
