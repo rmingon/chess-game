@@ -1,5 +1,5 @@
 import Piece from "./piece";
-import {Positon} from "../type";
+import {Position} from "../type";
 import {Basic} from "./basic";
 
 export default class King extends Basic implements Piece {
@@ -10,12 +10,12 @@ export default class King extends Basic implements Piece {
         this.img = color === "white" ? 'king_white' : 'king_black'
     }
 
-    eat({x, y}: Positon): boolean {
+    eat({x, y}: Position): boolean {
         return false;
     }
 
-    move({x, y}: Positon): boolean {
-        return false;
+    move({x, y}: Position): Position[] {
+        return [];
     }
 
 }

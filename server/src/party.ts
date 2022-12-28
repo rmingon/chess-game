@@ -1,4 +1,4 @@
-import {Board} from './type'
+import {Board, Position, Square} from './type'
 import {WebSocket} from "ws";
 import Pawn from "./piece/pawn";
 import Bishop from "./piece/bishop";
@@ -7,10 +7,11 @@ import Queen from "./piece/queen";
 import King from "./piece/king";
 import Rook from "./piece/rook";
 import Empty from "./piece/empty";
+import Piece from "./piece/piece";
 
 const BASE_BOARD =
   [
-    [new Rook('black'),new Knight('black'),new Bishop('black'),new Queen('black'),new King('black'),new Bishop('black'),new Knight('black'),new Rook('black')],
+    [new Rook('black'),new Knight('black'),new Bishop('black'),new King('black'),new Queen('black'),new Bishop('black'),new Knight('black'),new Rook('black')],
     [new Pawn('black'),new Pawn('black'),new Pawn('black'),new Pawn('black'),new Pawn('black'),new Pawn('black'),new Pawn('black'),new Pawn('black')],
     [new Empty(),new Empty(),new Empty(),new Empty(),new Empty(),new Empty(),new Empty(),new Empty()],
     [new Empty(),new Empty(),new Empty(),new Empty(),new Empty(),new Empty(),new Empty(),new Empty()],
@@ -30,14 +31,15 @@ export class Party {
     color === "White" ? this.setWhite(ws) : this.setBlack(ws)
     this.board = BASE_BOARD
     this.id = id
+    this.setBackground()
     this.sendBoard()
   }
 
   sendBoard() {
-      this.sendToPlayers({
-          id: this.id,
-          board: this.board
-      })
+    this.sendToPlayers({
+      id: this.id,
+      board: this.board
+    })
   }
 
   setWhite(ws: WebSocket) {
@@ -57,12 +59,34 @@ export class Party {
       this.white?.send(JSON.stringify(data))
   }
 
-  selected({x, y}: {x: number, y: number}) {
+  deselectAll() {
+    this.board.forEach((line: Square) => {
+      line.forEach((piece) => {
+        piece.setSelected(false)
+      })
+    })
+  }
+
+  selected({x, y}: Position) {
     let piece = this.board[x][y]
-    // TODO deselect all before
+    if (piece instanceof Empty)
+      return
+    this.deselectAll()
     piece.setSelected(true)
-    console.log(piece)
+    this.setBackground()
+    const can_move_on = piece.move({x,y})
+    can_move_on.forEach(({x, y}) => {
+      const chess_case = this.board[x][y]
+      chess_case.setSelected(true)
+    })
     this.sendBoard()
   }
 
+  private setBackground() {
+    this.board.forEach((line: Square, x) => {
+      line.forEach((piece, y) => {
+        piece.background = (y+x) % 2 ? 'black' : 'white'
+      })
+    })
+  }
 }

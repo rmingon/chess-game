@@ -1,6 +1,6 @@
 import Piece from "./piece";
-import {Positon} from "../type";
 import {Basic} from "./basic";
+import {Position} from "../type";
 
 export default class Pawn extends Basic implements Piece {
 
@@ -10,14 +10,15 @@ export default class Pawn extends Basic implements Piece {
     this.img = color === "white" ? 'pawn_white' : 'pawn_black'
   }
 
-  eat({x, y}: Positon): boolean {
+  eat({x, y}: Position): boolean {
     return false;
   }
 
-  move({x, y}: Positon): boolean {
-    return false;
+  move(position: Position): Position[] {
+    const color = this.color
+    if (color === "black")
+      return [this.bottom(position)];
+    else
+      return [this.top(position)];
   }
-
-
-
 }
