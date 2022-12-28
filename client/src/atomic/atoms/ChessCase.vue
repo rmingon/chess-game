@@ -1,5 +1,5 @@
 <template>
-  <div class="h-16 w-16" :class="[COLOR[props.color]]">
+  <div class="h-16 w-16" :class="piece.selected ? 'bg-blue-600' : [COLOR[props.piece.background]]">
     <img class="mx-auto my-auto" :src="getImgUrl(props.piece?.img || 'default')" alt="">
   </div>
 </template>
@@ -7,7 +7,9 @@
 <script setup lang="ts">
 
   interface Piece {
-    img: string
+    img: string;
+    selected: boolean;
+    background: string;
   }
 
   const props = defineProps<{
