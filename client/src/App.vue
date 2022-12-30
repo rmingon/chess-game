@@ -1,20 +1,45 @@
 <script setup lang="ts">
-  import {useWebSocket} from "@vueuse/core";
-  import {computed} from "vue";
+import {computed, ref} from "vue";
+  import Select from "./atomic/atoms/Select.vue"
+  import Button from "./atomic/atoms/Button.vue";
+  import ChessCase from "./atomic/atoms/ChessCase.vue";
+  import {board} from "./stores/board";
 
-  const { status, data, send, open, close } = useWebSocket('ws://127.0.0.1:8080')
+  const color_selected = ref<string>("White")
 
-  computed(() => {
-    if (status.value === "OPEN") {
-      send("YO")
-    }
-  })
+  const setColor = ($event: string) => {
+    color_selected.value = $event
+  }
+
+  const useBoard = board()
+
+  const play = () => {
+    useBoard.newGame(color_selected.value)
+  }
+
+  const pieceSelected = (x: number, y: number) => {
+    useBoard.selected({x, y})
+    console.log(x, y)
+  }
+
 </script>
 
 <template>
- {{ status }}
+  <div class="flex">
+    <div class="px-3">
+      <Select :list="['White','Black']" @changed="setColor"/>
+      <Button label="PLAY" @click="play()" />
+    </div>
+    <div>
+      <div v-for="(x, x_index) in useBoard.board" :key="x_index" class="flex">
+        <chess-case
+            :piece="y"
+            v-for="(y, y_index) in x" :key="y_index"
+            @click="pieceSelected(x_index, y_index)">
+        </chess-case>
+      </div>
+    </div>
+  </div>
 </template>
 
-<style scoped>
 
-</style>

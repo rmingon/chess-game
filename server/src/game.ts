@@ -5,9 +5,9 @@ import {WebSocket} from "ws";
 class Game {
   parties = new Map<String, Party>()
 
-  newGame(role: "white" | "black", ws: WebSocket) {
+  newGame(color: "White" | "Black", ws: WebSocket) {
     const id = makeId(8)
-    this.parties.set(id, new Party(role, ws, id))
+    this.parties.set(id, new Party(color, ws, id))
     this.news()
   }
 

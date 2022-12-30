@@ -1,10 +1,7 @@
 <template>
-  <div class="flex justify-center">
-    <div class="mb-3 xl:w-96">
-      <select @change="changed($event)"
+    <div class="mb-3">
+      <select @change="onChange($event)"
           class="form-select appearance-none
-      block
-      w-full
       px-3
       py-1.5
       text-base
@@ -22,23 +19,19 @@
         </option>
       </select>
     </div>
-  </div>
 </template>
 
 <script setup lang="ts">
   const props = defineProps<{
-    list: string[]
-    spy?: (val: string) => {}
+    list: string[],
   }>()
 
   const emit = defineEmits<{
     (e: 'changed', selected: string): void
   }>()
 
-  const changed = ($event: Event) => {
+  const onChange = ($event: Event) => {
     const el = $event.target as HTMLInputElement
-    console.log(el.value)
-    if (props.spy) props.spy(el.value)
     emit('changed', el.value)
   }
 </script>
