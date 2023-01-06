@@ -5,7 +5,7 @@ export class Basic {
     color: "white" | "black" = "black"
     img: string = ""
     selected: boolean = false
-    as_already_move : boolean = false
+    as_already_move: boolean = false
     position: Position = {x:0, y:0}
     background: string = ""
 
