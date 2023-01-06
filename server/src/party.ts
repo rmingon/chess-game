@@ -75,6 +75,7 @@ export class Party {
     let piece = this.board[x][y]
     if (piece instanceof Empty)
       return
+    this.last_selected_piece = piece
     this.deselectAll()
     piece.setSelected(true)
     this.setBackground()
