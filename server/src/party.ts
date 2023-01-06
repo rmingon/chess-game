@@ -26,6 +26,7 @@ export class Party {
   id: string
   white: WebSocket | undefined
   black: WebSocket | undefined
+  last_selected_piece : Piece | undefined
 
   constructor(color: "White" | "Black", ws: WebSocket, id: string) {
     color === "White" ? this.setWhite(ws) : this.setBlack(ws)
@@ -66,16 +67,22 @@ export class Party {
       })
     })
   }
-
+  getMoveFromLastPiece({x, y}: Position) : Position[] {
+    let can_move_on = this.last_selected_piece?.move({x, y}) || []
+    return can_move_on
+  }
   selected({x, y}: Position) {
     let piece = this.board[x][y]
     if (piece instanceof Empty)
       return
+    this.last_selected_piece = piece
     this.deselectAll()
     piece.setSelected(true)
     this.setBackground()
     const can_move_on = piece.move({x,y})
-    can_move_on.forEach(({x, y}) => {
+    can_move_on.forEach(({x, y}: Position) => {
+      if(x < 0 || x > 7 || y < 0 || y > 7) // OUTSIDE THE BOARD SO NO INSTANCE OF PIECE
+        return
       const chess_case = this.board[x][y]
       chess_case.setSelected(true)
     })
