@@ -15,7 +15,7 @@ export default class Knight extends Basic implements Piece {
         return false;
     }
 
-    move({x, y}: Position): Position[] {
+  canMoveOn({x, y}: Position): Position[] {
         let b = this.bottom
         let r = this.right
         let l = this.left
@@ -26,5 +26,10 @@ export default class Knight extends Basic implements Piece {
         let topLine = t(t({x, y}))
         return [r(bottomLine), l(bottomLine), b(rightLine), t(rightLine), b(leftLine), t(leftLine), r(topLine), l(topLine)];
     }
+
+
+  move({x, y}: Position): Position[] {
+    return []
+  }
 
 }
