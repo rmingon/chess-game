@@ -8,6 +8,8 @@ import Empty from "./piece/empty";
 
 export type Square = Array<Bishop | King | Knight | Pawn | Queen | Rook | Empty>
 
+export type Piece = Bishop | King | Knight | Pawn | Queen | Rook | Empty
+
 export type Board = Array<Square>
 
 export type Position = {
