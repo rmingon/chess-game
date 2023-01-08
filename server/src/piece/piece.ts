@@ -6,6 +6,7 @@ export default interface Piece {
   img: string
   eat({x, y}:Position): boolean
   move({x, y}:Position): Position[]
+  canMoveOn({x, y}:Position): Position[]
   top({x, y}:Position): Position
   bottom({x, y}:Position): Position
   left({x, y}:Position): Position
