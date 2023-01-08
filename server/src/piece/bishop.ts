@@ -14,7 +14,11 @@ export default class Bishop extends Basic implements Piece {
     return false;
   }
 
-  move({x, y}: Position): Position[] {
+  canMoveOn({x, y}: Position): Position[] {
     return [];
+  }
+
+  move({x, y}: Position): Position[] {
+    return []
   }
 }
