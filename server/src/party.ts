@@ -27,6 +27,7 @@ export class Party {
   white: WebSocket | undefined
   black: WebSocket | undefined
   last_selected : Position[] = []
+  eaten: Piece[] = []
   last_piece_selected_position : Position = {x: 0, y: 0}
 
   constructor(color: "White" | "Black", ws: WebSocket, id: string) {
@@ -40,6 +41,7 @@ export class Party {
   sendBoard() {
     this.sendToPlayers({
       id: this.id,
+      eaten: this.eaten,
       board: this.board
     })
   }
@@ -96,7 +98,7 @@ export class Party {
 
   movePiece(from: Position, to: Position) {
     if (!(this.board[to.x][to.y] instanceof Empty))
-      console.log(this.board[to.x][to.y])
+      this.eaten.push(this.board[to.x][to.y])
     this.board[to.x][to.y] = this.board[from.x][from.y]
     this.board[to.x][to.y].as_already_move = true
     this.board[from.x][from.y] = new Empty()
