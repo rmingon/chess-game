@@ -25,8 +25,8 @@ import {computed, ref} from "vue";
 </script>
 
 <template>
-  <div class="flex">
-    <div class="px-3">
+  <div class="flex space-x-6">
+    <div>
       <Select :list="['White','Black']" @changed="setColor"/>
       <Button label="PLAY" @click="play()" />
     </div>
@@ -37,6 +37,24 @@ import {computed, ref} from "vue";
             v-for="(y, y_index) in x" :key="y_index"
             @click="pieceSelected(x_index, y_index)">
         </chess-case>
+      </div>
+    </div>
+    <div>
+      <chess-case
+          v-for="piece in useBoard.eaten_white"
+          :piece="piece">
+      </chess-case>
+      <div class="flex mx-auto">
+        {{ useBoard.eaten_white_points }}
+      </div>
+    </div>
+    <div>
+      <chess-case
+          v-for="piece in useBoard.eaten_black"
+          :piece="piece">
+      </chess-case>
+      <div class="mx-auto">
+        {{ useBoard.eaten_black_points }}
       </div>
     </div>
   </div>
