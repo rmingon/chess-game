@@ -3,6 +3,7 @@ import {Basic} from "./basic";
 import {Position} from "../type";
 
 export default class Pawn extends Basic implements Piece {
+  point = 1
 
   constructor(color: "white" | "black") {
     super()
