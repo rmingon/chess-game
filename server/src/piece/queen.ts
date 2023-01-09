@@ -3,7 +3,7 @@ import {Basic} from "./basic";
 import Piece from "./piece";
 
 export default class Queen extends Basic implements Piece {
-
+    point = 9
     constructor(color: "white" | "black") {
         super()
         this.color = color
