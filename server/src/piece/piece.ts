@@ -1,6 +1,7 @@
 import {Position} from "../type";
 
 export default interface Piece {
+  point: number
   can_jump: boolean
   color: 'white' | 'black'
   img: string
