@@ -3,7 +3,7 @@ import Piece from "./piece";
 import {Position} from "../type";
 
 export default class Rook extends Basic implements Piece {
-
+  point = 5
   constructor(color: "white" | "black") {
     super()
     this.color = color
