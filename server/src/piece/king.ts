@@ -3,7 +3,7 @@ import {Position} from "../type";
 import {Basic} from "./basic";
 
 export default class King extends Basic implements Piece {
-
+  point = 0
   constructor(color: "white" | "black") {
     super()
     this.color = color
